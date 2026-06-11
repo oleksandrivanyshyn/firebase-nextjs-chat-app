@@ -9,7 +9,7 @@ const Page = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState(avatarPlaceholder);
   const router = useRouter();
@@ -42,6 +42,20 @@ const Page = () => {
           >
             New Avatar
           </button>
+        </div>
+        {/*name*/}
+        <div>
+          <label className="label">
+            <span className="text-base label-text">Name</span>
+          </label>
+          <input
+            type="text"
+            placeholder="Name"
+            className="w-full input input-bordered"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          {errors.name && <span className="text-red-500">{errors.name}</span>}
         </div>
       </form>
     </div>
