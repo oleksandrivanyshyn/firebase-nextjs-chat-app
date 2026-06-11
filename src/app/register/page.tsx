@@ -57,6 +57,54 @@ const Page = () => {
           />
           {errors.name && <span className="text-red-500">{errors.name}</span>}
         </div>
+        {/*email*/}
+        <div>
+          <label className="label">
+            <span className="text-base label-text">Email</span>
+          </label>
+          <input
+            type="text"
+            placeholder="Email"
+            className="w-full input input-bordered"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          {errors.email && <span className="text-red-500">{errors.email}</span>}
+        </div>
+
+        {/*password*/}
+        <div>
+          <label className="label">
+            <span className="text-base label-text">Password</span>
+          </label>
+          <input
+            type="password"
+            placeholder="Enter Password"
+            className="w-full input input-bordered"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {errors.password && (
+            <span className="text-red-500">{errors.password}</span>
+          )}
+        </div>
+
+        {/*confirm password*/}
+        <div>
+          <label className="label">
+            <span className="text-base label-text">Confirm Password</span>
+          </label>
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            className="w-full input input-bordered"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+          {errors.confirmPassword && (
+            <span className="text-red-500">{errors.confirmPassword}</span>
+          )}
+        </div>
       </form>
     </div>
   );
