@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AvatarGenerator } from 'random-avatar-generator';
+import avatarPlaceholder from '@/../public/file.svg';
 
 const Page = () => {
   const [name, setName] = useState('');
@@ -10,7 +11,7 @@ const Page = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const [avatarUrl, setAvatarUrl] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState(avatarPlaceholder);
   const router = useRouter();
   const generateRandomAvatar = () => {
     const avatarGenerator = new AvatarGenerator();
@@ -28,6 +29,20 @@ const Page = () => {
         <h1 className="text-xl text-center font-semibold text-[#0b3a65ff]">
           Chat<span className="font-bold text-[#eeab63ff]">2</span>Chat
         </h1>
+        <div className="flex items-center space-y-2 justify-between border border-gray-200 p-2">
+          <img
+            src={avatarUrl}
+            alt="Avatar"
+            className=" rounded-full h-20 w-20"
+          />
+          <button
+            type="button"
+            className="btn btn-outline"
+            onClick={handleRefreshAvatar}
+          >
+            New Avatar
+          </button>
+        </div>
       </form>
     </div>
   );
