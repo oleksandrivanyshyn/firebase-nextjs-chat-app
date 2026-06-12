@@ -1,9 +1,12 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { auth, firestore } from '@/lib/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 import { AvatarGenerator } from 'random-avatar-generator';
-import avatarPlaceholder from '@/../public/file.svg';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import avatarPlaceholder from '@/../public/file.svg';
 
 const Page = () => {
   const [name, setName] = useState('');
@@ -46,15 +49,27 @@ const Page = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      if (!validateForm()){
+      if (!validateForm()) {
         setLoading(false);
         return;
       }
-      alert('Form submitted successfully!');
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+      const user = userCredential.user;
+      const docRef = doc(firestore, 'users', user.uid);
+      await setDoc(docRef, {
+        name,
+        email,
+        avatarUrl,
+      });
+      router.push('/');
+      setErrors({});
     } catch (error) {
       console.error('Error:', error);
     }
-
   };
 
   return (
