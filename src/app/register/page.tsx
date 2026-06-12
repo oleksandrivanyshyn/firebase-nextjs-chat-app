@@ -18,6 +18,9 @@ const Page = () => {
     const avatarGenerator = new AvatarGenerator();
     return avatarGenerator.generateRandomAvatar();
   };
+  useEffect(() => {
+    setAvatarUrl(generateRandomAvatar());
+  }, []);
   const handleRefreshAvatar = () => {
     setAvatarUrl(generateRandomAvatar());
   };
@@ -43,14 +46,17 @@ const Page = () => {
     e.preventDefault();
     setLoading(true);
     try {
+      if (!validateForm()){
+        setLoading(false);
+        return;
+      }
+      alert('Form submitted successfully!');
     } catch (error) {
       console.error('Error:', error);
     }
-    setLoading(false);
+
   };
-  useEffect(() => {
-    setAvatarUrl(generateRandomAvatar());
-  }, []);
+
   return (
     <div className="flex justify-center items-center h-screen p-10 m-2">
       <form className="space-y-4 w-full max-w-2xl shadow-lg p-10">
