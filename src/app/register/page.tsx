@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AvatarGenerator } from 'random-avatar-generator';
 import avatarPlaceholder from '@/../public/file.svg';
+import Link from 'next/link';
 
 const Page = () => {
   const [name, setName] = useState('');
@@ -19,6 +20,33 @@ const Page = () => {
   };
   const handleRefreshAvatar = () => {
     setAvatarUrl(generateRandomAvatar());
+  };
+  const validateForm = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const newErrors: Record<string, string> = {};
+    if (!name.trim()) {
+      newErrors.name = 'Name is required';
+    }
+    if (!email.trim() || !emailRegex.test(email)) {
+      newErrors.email = 'Invalid email address';
+    }
+    if (password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters';
+    }
+    if (password !== confirmPassword) {
+      newErrors.confirmPassword = 'Passwords do not match';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+    } catch (error) {
+      console.error('Error:', error);
+    }
+    setLoading(false);
   };
   useEffect(() => {
     setAvatarUrl(generateRandomAvatar());
@@ -104,6 +132,27 @@ const Page = () => {
           {errors.confirmPassword && (
             <span className="text-red-500">{errors.confirmPassword}</span>
           )}
+        </div>
+        <div>
+          <button
+            type="submit"
+            className="btn btn-block bg-[#0b3a65ff] text-white"
+          >
+            {loading ? (
+              <span className="loading loading-spinner loading-sm"></span>
+            ) : (
+              'Sign Up'
+            )}
+          </button>
+          <span>
+            Already have an account?{' '}
+            <Link
+              href="/login"
+              className="text-blue-600 hover:text-blue-800 hover:underline"
+            >
+              Login
+            </Link>
+          </span>
         </div>
       </form>
     </div>
